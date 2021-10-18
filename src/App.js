@@ -3,6 +3,7 @@ import { VideoPlayer } from './components/VideoPlayer/VideoPlayer';
 import './App.css'
 import SearchBar from './components/SearchBar/SearchBar';
 
+
 export const App = () => {
   const [searchResults] = useState(null);
   console.log(searchResults);
@@ -12,6 +13,7 @@ export const App = () => {
     <div className="App-container">
       <SearchBar />
       <VideoPlayer videoId={videoId} />
+      
     </div>
   )
 }
