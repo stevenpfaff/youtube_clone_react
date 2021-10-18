@@ -1,17 +1,31 @@
-import React, { Component } from 'react'
+import React, {useState} from 'react';
+import { VideoPlayer } from './components/VideoPlayer/VideoPlayer';
 import './App.css'
-import YouTubeVideo from './components/YouTube/YouTube'
-import OffCanvasExample from './components/Bootstrap/bootstrap'
 
+export const App = () => {
+  const [searchResults] = useState(null);
+  console.log(searchResults);
 
-class App extends Component {
-  render () {
-    return (
-      <div className='App-container'>
-        <YouTubeVideo videoId='OksMOR5emE8' />
-      </div>
-    )
-  }
+  const videoId = getVideoId(searchResults);
+  return (
+    <div className="App-container">
+      <VideoPlayer videoId={videoId} />
+    </div>
+  )
 }
 
-export default App
+const defaultVideoId = 'bn-DQCifeQQ';
+
+function getVideoId(searchResult) {
+  console.log('getVideoId:', searchResult);
+
+  if (!searchResult) {
+    return defaultVideoId;
+  }
+  if (searchResult.items.length === 0) {
+    return defaultVideoId;
+  }
+
+  return searchResult.items[0].id.videoId;
+}
+export default App;
