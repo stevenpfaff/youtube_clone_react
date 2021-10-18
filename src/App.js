@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { VideoPlayer } from './components/VideoPlayer/VideoPlayer';
 import './App.css'
+import SearchBar from './components/SearchBar/SearchBar';
 
 export const App = () => {
   const [searchResults] = useState(null);
@@ -9,6 +10,7 @@ export const App = () => {
   const videoId = getVideoId(searchResults);
   return (
     <div className="App-container">
+      <SearchBar />
       <VideoPlayer videoId={videoId} />
     </div>
   )
