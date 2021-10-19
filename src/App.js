@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import SearchBar from './components/SearchBar/SearchBar'
 import RelatedVideos from './components/RelatedVideos/RelatedVideos'
+import Comments from './components/Comments/Comments';
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class App extends Component {
   }
 
   searchVideo = async (searchQuery) => {
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAOuwBnrH2YALvXHvlxOkw01CsrAQ6ezM8`);
+    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAVsPjWBYDx9N3nDG-3ZYERTq3YqPZRP0k`);
     let allVideos = response.data;
 
     this.getRelatedVideos({
@@ -32,7 +33,7 @@ class App extends Component {
   }
 
   getRelatedVideos = async (videoData) => { 
-    let response = await axios.get (`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoData.videoId}&type=video&part=snippet&key=AIzaSyAOuwBnrH2YALvXHvlxOkw01CsrAQ6ezM8`);
+    let response = await axios.get (`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoData.videoId}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
     let relatedVideos = response.data.items.filter(video => video.snippet);
     let relatedVideosArray = relatedVideos.map((video) => {
       return ({
@@ -72,6 +73,7 @@ class App extends Component {
           </div>
           <br />
           <br />
+          <Comments videoId={this.state.videoId}/>
           <div className="container bg-light text-dark border border-primary">
           <RelatedVideos relatedVideos={this.state.relatedVideos} />
           </div>

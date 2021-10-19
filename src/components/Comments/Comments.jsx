@@ -5,18 +5,19 @@ class Comments extends Component {
     constructor(props) {
         super(props);
             this.state = {
-                    video_id: '',
+                    videoId: '',
                     comment_text: '',
-                    like: '',
-                    dislike: '',
+                    likes: '',
+                    dislikes: '',
             }
     }
 
     addComment = async () => {
         const comment = {
-            video_id: this.props.videoId,
+            videoId: this.props.videoId,
             comment_text: this.state.comment_text,
         }
+        console.log("Inside AddComment: ", comment)
         try{
             await axios.post('http://127.0.0.1:8000/comments/', comment);
             this.props.getComments();
