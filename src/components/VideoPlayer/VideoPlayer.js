@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
 
-export const VideoPlayer = (props) => {
-  const { videoId, title } = props;
+import React from 'react';
 
-  if (!videoId) {
-    return null;
+const VideoPlayer = ({video}) => {
+  if (!video) {
+    return <div></div>;
   }
+    const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
+    return (
+      <div>
+        <div className='ui embed'>
+          <iframe src={videoSrc} allowFullScreen title='YouTube Clone Video player'/>
+        </div>
+          <div className='ui segment'>
+            <h4 className='ui header'>{video.snippet.title}</h4>
+              <p>{video.snippet.description}</p>
+          </div>
+        </div>
 
-  return (
-    <div>
-      <iframe
-        id="ytplayer"
-        title={title}
-        width="1280"
-        height="720"
-        src={`https://www.youtube.com/embed/${videoId}`}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        frameBorder="0"
-        allowFullScreen
-      />
-    </div>
-  )
+    )
 }
+
+export default VideoPlayer;
