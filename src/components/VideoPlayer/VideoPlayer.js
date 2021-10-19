@@ -15,7 +15,6 @@ const VideoPlayer = ({video}) => {
               <p>{video.snippet.description}</p>
           </div>
         </div>
-
     )
 }
 

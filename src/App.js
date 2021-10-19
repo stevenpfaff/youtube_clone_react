@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SearchBar from './components/SearchBar/SearchBar';
-import VideoPlayer from './components/VideoPlayer/VideoPlayer';
-import RelatedVideos from './components/RelatedVideos/RelatedVideos';
-import './App.css'
-
+import SearchBar from './components/SearchBar/SearchBar'
+import RelatedVideos from './components/RelatedVideos/RelatedVideos'
 
 class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        videoId:'',
-        title:'',
+        videoId: '',
+        videoTitle: '',
+        videoDescription: '',
+        relatedVideos: [],
+      
       }
   }
 
   componentDidMount() {
-    this.searchVideo('software development')
+    this.searchVideo('Juice WRLD - Wishing Well (Official Music Video)')
   }
 
   searchVideo = async (searchQuery) => {
@@ -25,25 +25,26 @@ class App extends Component {
 
     this.getRelatedVideos({
       videoId: allVideos.items[0].id.videoId,
-      title: allVideos.items[0].snippet.title,
+      videoTitle: allVideos.items[0].snippet.title,
+      videoDescription: allVideos.items[0].snippet.description,
     })
 
-    
   }
-  getRelatedVideos = async (video) =>{
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${video.videoId}&type=video&part=snippet&key=AIzaSyAOuwBnrH2YALvXHvlxOkw01CsrAQ6ezM8`);
-    let relatedVideos = response.data.items.filter(video => video.snippet);
-    let relatedVideosArray = relatedVideos.map((video) =>{
-      return ({
-        videoId: video.id.videoId,
-        title: video.snippet.title,
-      });
-    });
-    this.setState({
-      videoId: video.videoId,
-      title: video.title,
-    })
 
+  getRelatedVideos = async (videoData) => { 
+    let response = await axios.get (`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoData.videoId}&type=video&part=snippet&key=AIzaSyAOuwBnrH2YALvXHvlxOkw01CsrAQ6ezM8`);
+    let relatedVideos = response.data.items.filter(video => video.snippet);
+    let relatedVideosArray = relatedVideos.map((video) => {
+      return ({
+          videoId: video.id.videoId,
+          videoTitle: video.snippet.title,});
+      });
+      this.setState({
+        videoId: videoData.videoId,
+        videoTitle: videoData.videoTitle,
+        videoDescription: videoData.videoDescription,
+        relatedVideos: relatedVideosArray
+    })
   }
 
   render() { 
@@ -52,20 +53,29 @@ class App extends Component {
         <React.Fragment>
         <br />
           <br />
-          <div>
+          <div className="container bg-light text-dark border border-primary">
+          <u><h1 className="marquee">YouTube Clone</h1></u>
+          <br />
           <SearchBar searchVideo={this.searchVideo}/>
           </div>
           <br />
           <br />
           <br />
-          <div className="App-container">
-          <iframe class="border border-primary" id="ytplayer" title="title" type="text/html" width="1280" height="720"
+          <div className="d-flex justify-content-center">
+          <iframe class="border border-primary" id="ytplayer" title="title" type="text/html" width="1080" height="720"
               src={`https://www.youtube.com/embed/${this.state.videoId}?`}
               frameborder="0"></iframe>
           </div>
           <div className="container">
-          <h2>{this.state.title}</h2>
+          <h2>{this.state.videoTitle}</h2>
+          <h3>{this.state.videoDescription}</h3>
           </div>
+          <br />
+          <br />
+          <div className="container bg-light text-dark border border-primary">
+          <RelatedVideos relatedVideos={this.state.relatedVideos} />
+          </div>
+          <br />
           <br />
         </React.Fragment>
       </div>
