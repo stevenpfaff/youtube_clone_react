@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchBar from './components/SearchBar/SearchBar'
 import RelatedVideos from './components/RelatedVideos/RelatedVideos'
 import Comments from './components/Comments/Comments';
+import "./App.css"
 
 class App extends Component {
   constructor(props) {
@@ -55,9 +56,11 @@ class App extends Component {
         <br />
           <br />
           <div className="container bg-light text-dark border border-primary">
-          <u><h1 className="marquee">YouTube Clone</h1></u>
+          <u><h1 className="App">YouTube Clone</h1></u>
           <br />
+          <div className="App"> 
           <SearchBar searchVideo={this.searchVideo}/>
+          </div>
           </div>
           <br />
           <br />
